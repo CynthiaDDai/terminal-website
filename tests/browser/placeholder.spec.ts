@@ -29,7 +29,7 @@ test('profile values fill the wordmark, footers, contact page and fastfetch', as
   await page.goto('/');
   await expect(page.locator('.home-wordmark')).toHaveText('mira’s space');
   await expect(page.locator('.home-caption')).toHaveText('a personal space');
-  await expect(page.locator('.home-footer > span').first()).toHaveText('writing · building · thinking');
+  await expect(page.locator('.home-footer > span').first()).toHaveText('writing · building · thinking三思而行');
   await command(page, 'fastfetch');
   const network = page.locator('.fastfetch-block').nth(3);
   await expect(network.locator('a[href="mailto:hello@placeholder.test"]')).toBeVisible();
@@ -44,7 +44,28 @@ test('profile values fill the wordmark, footers, contact page and fastfetch', as
   await expect(page.locator('.prose')).not.toContainText('haven’t been added yet');
   await page.goto('/no-such-page');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('A path less travelled.');
-  await expect(page.locator('.page-footer')).toContainText('Take your time.');
+  await expect(page.locator('.page-footer-line')).toHaveText(/^(Take your time\.|Read slowly\.)$/);
+});
+
+test('decorative mottos stay out of the accessible text, and every content page shares one footer', async ({ page }) => {
+  await page.goto('/blog');
+  const motto = page.locator('.title-motto');
+  await expect(motto).toHaveText('且听风吟');
+  await expect(motto).toHaveAttribute('aria-hidden', 'true');
+  await expect(motto).toHaveAttribute('lang', 'zh');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Blog');
+  await expect(page.locator('.edge-motto')).toHaveText('开卷如晤');
+  await expect(page.locator('.edge-handle')).toHaveAccessibleName('Explore the site');
+  await expect(page.locator('#search-title')).toHaveText('Search this space寻寻觅觅');
+  for (const path of ['/blog', '/blog/placeholder-hello', '/no-such-page']) {
+    await page.goto(path);
+    const footer = page.locator('.page-footer');
+    await expect(footer.getByRole('link', { name: '~ / mira’s space' })).toHaveAttribute('href', '/');
+    await expect(footer.getByRole('link', { name: 'RSS ↗' })).toHaveAttribute('href', '/rss.xml');
+    await expect(footer.locator('.page-footer-line')).toHaveText(/^(Take your time\.|Read slowly\.)$/);
+  }
+  await page.goto('/blog/placeholder-hello');
+  await expect(page.locator('.toc-label .motto')).toHaveText('按图索骥');
 });
 
 test('every document uses the article layout and returns to its parent by title', async ({ page }) => {
@@ -64,21 +85,23 @@ test('every document uses the article layout and returns to its parent by title'
   await expect(page.getByRole('link', { name: 'Visit project ↗' })).toBeVisible();
 });
 
-test('code uses the bundled monospace font, and a page without CJK text loads no CJK font', async ({ page }) => {
-  const fontRequests: string[] = [];
-  page.on('request', request => { if (request.url().includes('/fonts/')) fontRequests.push(new URL(request.url()).pathname); });
-  await page.goto('/');
-  await page.evaluate(() => document.fonts.ready);
-  expect(fontRequests).toContain('/fonts/maple-mono-regular.woff2');
-  expect(fontRequests.filter(path => !/\/(maple-mono-[a-z]+|nerd-symbols-mono)\.woff2$/.test(path))).toEqual([]);
-  await page.goto('/blog/placeholder-hello');
-  await page.evaluate(() => document.fonts.ready);
+test('code uses the bundled monospace font, and no page downloads a large font file', async ({ page }) => {
+  const requested = new Set<string>();
+  page.on('request', request => { if (request.url().includes('/fonts/')) requested.add(new URL(request.url()).pathname); });
+  for (const path of ['/', '/blog/placeholder-hello']) {
+    await page.goto(path);
+    await page.evaluate(() => document.fonts.ready);
+  }
+  const downloaded = await Promise.all([...requested].map(async path => ({ path, size: (await (await page.request.get(path)).body()).length })));
+  expect(downloaded.map(font => font.path)).toContain('/fonts/maple-mono-regular.woff2');
+  // A complete CJK font is megabytes; fonts named *.subset.woff2 are cut down at build time.
+  expect(downloaded.filter(font => font.size > 1.5 * 1024 * 1024)).toEqual([]);
   const session = await page.context().newCDPSession(page);
   await session.send('DOM.enable'); await session.send('CSS.enable');
   const { root } = await session.send('DOM.getDocument', { depth: -1 });
   const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '.prose pre code .line span' });
-  const { fonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
-  expect(fonts.some(font => font.isCustomFont && font.familyName === 'Maple Mono' && font.glyphCount > 0)).toBe(true);
+  const { fonts: rendered } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
+  expect(rendered.some(font => font.isCustomFont && font.familyName === 'Maple Mono' && font.glyphCount > 0)).toBe(true);
   await session.detach();
 });
 

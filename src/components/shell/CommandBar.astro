@@ -7,7 +7,7 @@ const { path } = Astro.props;
 <section class="command-bar shell-surface" data-shell-surface aria-label="Site terminal">
   <div class="mobile-page-tools">
     <MobilePath path={path} />
-    <div data-js-only><button type="button" class="quiet-button" data-open-search aria-label="Search this space"><span aria-hidden="true">⌕</span></button><button type="button" class="quiet-button" data-open-command aria-label="Open commands"><span aria-hidden="true">&gt;_</span></button><button type="button" class="quiet-button" data-open-themes aria-label="Choose theme"><span aria-hidden="true">◐</span></button></div>
+    <div data-js-only><button type="button" class="quiet-button" data-open-search aria-label="Search this space"><span aria-hidden="true">⌕</span></button><button type="button" class="quiet-button" data-open-command aria-label="Open commands"><span aria-hidden="true">&gt;_</span></button><button type="button" class="quiet-button" data-open-themes aria-label="Choose theme"><span class="theme-swatch mobile-theme-swatch" aria-hidden="true"></span></button></div>
   </div>
   <Prompt path={path} id="page-command" />
   <div class="completions" id="page-command-completions" data-completions aria-live="polite"></div>

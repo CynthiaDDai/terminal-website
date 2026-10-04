@@ -9,15 +9,20 @@
 .home-content .terminal-stage { min-height: 70vh; flex-shrink: 0; }
 .home-header, .home-footer { flex-shrink: 0; }
 .home-footer { margin-top: auto; width: 100%; gap: 1rem; }
-.home-footer > span > span { margin: 0 .55em; color: var(--terminal-accent-1); }
+.home-footer-dot { margin: 0 .55em; color: var(--terminal-accent-1); }
 .theme-footer { border: 0; display: inline-flex; align-items: center; gap: .75rem; color: var(--site-muted); padding: .5rem 0; }
 .theme-swatch { height: .55rem; width: .55rem; border-radius: 50%; background: var(--terminal-accent-1); box-shadow: .25rem 0 0 var(--terminal-accent-2); }
 .edge-navigation { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 10; font-family: var(--font-mono); }
 .edge-menu { position: relative; }
-.edge-handle { border: 0; cursor: pointer; position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 160px; width: 48px; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-direction: column; color: var(--site-muted); }
+.edge-handle { border: 0; cursor: pointer; position: absolute; right: 0; top: 50%; transform: translateY(-50%); min-height: 160px; padding: 1.2rem 0; width: 48px; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-direction: column; color: var(--site-muted); }
 .mobile-nav > summary::-webkit-details-marker { display: none; }
-.edge-handle::before { content: ''; width: 1px; height: 160px; background: var(--chrome-accent); opacity: .35; position: absolute; right: 12px; }
+.edge-handle::before { content: ''; width: 1px; top: 0; bottom: 0; background: var(--chrome-accent); opacity: .35; position: absolute; right: 12px; }
 .edge-label { font-size: .7rem; writing-mode: vertical-rl; letter-spacing: .15em; }
+.motto.edge-motto { writing-mode: vertical-rl; margin: 0; font-size: 1rem; letter-spacing: .4em; color: var(--site-fg); opacity: .75; }
+.edge-motto + .edge-label { font-size: .6rem; }
+/* Decorative words (Motto.astro): set in the CJK font, quieter than the label they accompany. */
+.motto { margin-left: .9em; font-family: var(--font-cjk), serif; font-weight: 400; letter-spacing: .25em; color: var(--site-muted); white-space: nowrap; }
+.title-motto { display: block; margin: 0 0 1rem; font-size: 1rem; letter-spacing: .5em; color: var(--terminal-accent-1); opacity: .85; }
 .edge-mark { color: var(--chrome-accent); }
 .edge-navigation nav { width: 230px; background: var(--site-bg); padding: 1.5rem 2.8rem 1.5rem 1.5rem; border-left: 1px solid var(--chrome-border); }
 .edge-navigation nav a { display: flex; align-items: center; gap: .75rem; padding: .65rem 0; color: var(--site-muted); text-decoration: none; font-size: .85rem; }
@@ -76,6 +81,7 @@ h1 { font-size: clamp(2.35rem, 4.3vw, 3.9rem); font-weight: 500; line-height: 1.
 .content-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.6rem; }
 .page-footer { width: min(100% - 3rem, 1100px); margin: 0 auto; padding: 2rem 0; border-top: 1px solid var(--chrome-border); display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-family: var(--font-mono); font-size: .7rem; color: var(--site-muted); }
 .page-footer a { text-decoration: none; }
+.page-footer-line[lang] { font-size: .85rem; letter-spacing: .1em; }
 .noscript-note { position: fixed; bottom: 5rem; left: 1.5rem; right: 1.5rem; text-align: center; font-size: .85rem; color: var(--site-muted); }
 /* Keep the text clear of the index handle on narrow desktop windows. */
 @media (min-width: 701px) and (max-width: 1000px) and (pointer: fine) {
@@ -85,5 +91,6 @@ h1 { font-size: clamp(2.35rem, 4.3vw, 3.9rem); font-weight: 500; line-height: 1.
   .top-nav { padding: 1.5rem; gap: 1rem; }
 }
 @media (max-width: 700px), (pointer: coarse) {
-  .page-footer > span { display: none; }
+  .page-footer { flex-wrap: wrap; }
+  .page-footer-line { order: -1; flex-basis: 100%; text-align: center; }
 }

@@ -13,12 +13,23 @@
   "homeFooter": [
     "writing",
     "building",
-    "thinking"
+    {
+      "text": "thinking",
+      "motto": "三思而行"
+    }
   ],
-  "pageFooter": "Take your time.",
+  "pageFooter": [
+    "Take your time.",
+    "Read slowly."
+  ],
   "notFound": {
     "title": "A path less travelled.",
     "description": "There isn’t a page at this address."
+  },
+  "mottos": {
+    "index": "开卷如晤",
+    "search": "寻寻觅觅",
+    "toc": "按图索骥"
   },
   "lang": "en",
   "dateLocale": "en-CA",

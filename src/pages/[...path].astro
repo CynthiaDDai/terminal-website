@@ -24,7 +24,7 @@ const children = node.kind === 'directory' ? node.children : [];
 // Documents always use the article layout, wherever they live; directories use the page layout.
 const parentTitle = tree.nodes.find(parent => parent.path === node.parentPath)?.title ?? 'Home';
 ---
-{node.kind === 'directory' ? <PageLayout title={node.title} description={node.description} eyebrow={virtualPath(node.path)} wide>
+{node.kind === 'directory' ? <PageLayout title={node.title} description={node.description} eyebrow={virtualPath(node.path)} motto={node.frontmatter.motto} wide>
   {Content && <div class="prose"><Content /></div>}
   {node.frontmatter.show_children !== false && children.length > 0 && <ContentList entries={children} groups={node.frontmatter.groups} />}
 </PageLayout> : entry && rendered && Content && <ArticleLayout {...entry.data} title={node.title} description={node.description} tags={node.tags} headings={rendered.headings} parentTitle={parentTitle}>

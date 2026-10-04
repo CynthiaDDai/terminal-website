@@ -88,6 +88,18 @@ describe('site profile', () => {
       expect(errors).toContain(field);
     }
   });
+  it('accepts footer lines, footer words with mottos and the three motto slots, and nothing else', () => {
+    const profile = valid();
+    Object.assign(profile, {
+      pageFooter: ['One line.', '另一句。'], homeFooter: ['plain', { text: 'cats', motto: '衔蝉入梦' }],
+      notFound: { title: 'Lost', description: 'Nothing here.', motto: '迷魂难招', quote: '雄鸡一声天下白。' },
+      mottos: { index: '灯火阑珊', search: '众里寻他', toc: '栏杆拍遍' },
+    });
+    expect(siteConfigErrors(profile)).toEqual([]);
+    Object.assign(profile, { pageFooter: [], homeFooter: [{ motto: 'no text' }], mottos: { footer: '多余' }, notFound: { title: 'Lost', description: '', quote: 1 } });
+    const errors = siteConfigErrors(profile).join('\n');
+    for (const field of ['"pageFooter"', '"homeFooter"', '"mottos"', '"notFound"']) expect(errors).toContain(field);
+  });
 });
 
 describe('internal link check', () => {

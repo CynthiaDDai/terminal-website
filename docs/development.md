@@ -46,7 +46,8 @@ shell.nix             development shell
 3. **Shared data.** The tree's flat projection, `entries` (path, title, description, kind, tags, dates, search text), drives navigation, `ls`/`cd`/`open`, completion, search, `fastfetch`, the sitemap and RSS. `BaseLayout` embeds it in each page as `<script id="site-data" type="application/json">`, together with the profile and fastfetch style.
 4. **Themes.** `scripts/theme-discovery.mjs` is a Vite plugin. It reads `src/themes/*/` and `themes.json` on the build machine and exposes them as the virtual module `virtual:site-themes`. `lib/theme/catalog.ts` parses each Oh My Posh file (`omp-parser.ts`), adapts it to website colors (`omp-adapter.ts`) and attaches mobile prompts (`mobile.ts`). The browser never reads the file system.
 5. **Markdown.** `remark-math` and `rehype-katex`, then two local rehype plugins: `rehype-scroll-regions.mjs` makes wide code, tables and equations keyboard-scrollable, and `rehype-file-cards.mjs` turns standalone links to files in `public/` into cards.
-6. **Checks.** `astro check` type-checks; after the build, `scripts/check-links.mjs` checks every internal `href` and `src` in `dist/`.
+6. **Fonts.** After the build, `scripts/subset-fonts.mjs` cuts every `*.subset.woff2` in `dist/` down to the characters found in the built HTML, XML and scripts.
+7. **Checks.** `astro check` type-checks; after the build, `scripts/check-links.mjs` checks every internal `href` and `src` in `dist/`.
 
 In development, the tree is rebuilt on every request, so content changes appear on refresh. The theme plugin watches `src/themes/` and `themes.json` and reloads the page when they change.
 
@@ -114,6 +115,6 @@ nix-shell shell.nix --run 'npm run test:browser'
 
 - The site must be served from a domain root. Supporting a sub-path would need one place that prefixes every internal URL.
 - The full-text search index is embedded in every page and grows with the amount of content. Moving it to a separately loaded file is the fix once that matters.
-- The bundled Nerd Font (1.2 MB), and any CJK webfont added in `fonts.css`, are complete fonts, loaded only when a page needs their characters. Build-time subsetting to the glyphs the themes and content actually use would shrink them.
+- The bundled Nerd Font (1.2 MB) is complete, so any icon in a new theme works. Renaming it to `*.subset.woff2` would cut it to the icons the installed themes use, since theme data is part of the built scripts.
 - Search text for MDX pages is taken from the source, so JSX expressions are indexed as words.
 - Astro prints an `use astro:head-inject` bundling warning for MDX. Static output is unaffected.

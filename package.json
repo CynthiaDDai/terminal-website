@@ -26,7 +26,8 @@
     "astro": "^7.3.5",
     "katex": "^0.16.22",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "subset-font": "^2.9.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",

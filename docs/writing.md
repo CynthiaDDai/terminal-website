@@ -79,6 +79,7 @@ tags: [mathematics, teaching]
 | `links` | map | Label → URL buttons on the page and in its listing (see [Papers and other works](#papers-and-other-works)) |
 | `repo` | URL | A "Source code ↗" link |
 | `demo` | URL | A "Visit project ↗" link |
+| `motto` | text | Decorative words shown small above the title, such as `雪泥鸿爪`; hidden from screen readers and search (see [Mottos](configuration.md#mottos)) |
 | `show_children` | true/false | Section pages only: `false` hides the list of children |
 | `groups` | map | Section pages only: splits the listing into headed groups |
 

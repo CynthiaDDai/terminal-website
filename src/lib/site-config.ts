@@ -1,8 +1,9 @@
-const text = ['name', 'owner', 'user', 'host', 'description', 'bio', 'caption', 'pageFooter', 'lang', 'dateLocale'];
-const known = new Set([...text, 'wordmark', 'homeFooter', 'notFound', 'feed', 'email', 'github', 'socials', 'friends', 'activityLimit']);
+const text = ['name', 'owner', 'user', 'host', 'description', 'bio', 'caption', 'lang', 'dateLocale'];
+const known = new Set([...text, 'wordmark', 'homeFooter', 'pageFooter', 'notFound', 'mottos', 'feed', 'email', 'github', 'socials', 'friends', 'activityLimit']);
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
 const isString = (value: unknown): value is string => typeof value === 'string';
+const optionalString = (value: unknown) => value === undefined || isString(value);
 const webUrl = (value: unknown, protocols = ['http:', 'https:']) => {
   try { return isString(value) && protocols.includes(new URL(value).protocol); } catch { return false; }
 };
@@ -17,8 +18,17 @@ export function siteConfigErrors(profile: unknown): string[] {
   const wordmark = profile.wordmark;
   if (!isRecord(wordmark) || !isString(wordmark.name) || !isString(wordmark.suffix)) errors.push('"wordmark" must be { "name": string, "suffix": string }.');
   const notFound = profile.notFound;
-  if (!isRecord(notFound) || !isString(notFound.title) || !isString(notFound.description)) errors.push('"notFound" must be { "title": string, "description": string }.');
-  if (!Array.isArray(profile.homeFooter) || !profile.homeFooter.every(isString)) errors.push('"homeFooter" must be a list of strings.');
+  if (!isRecord(notFound) || !isString(notFound.title) || !isString(notFound.description) || !optionalString(notFound.motto) || !optionalString(notFound.quote)) {
+    errors.push('"notFound" must be { "title": string, "description": string } with optional "motto" and "quote" strings.');
+  }
+  const footerWord = (word: unknown) => isString(word) || (isRecord(word) && isString(word.text) && optionalString(word.motto));
+  if (!Array.isArray(profile.homeFooter) || !profile.homeFooter.every(footerWord)) errors.push('"homeFooter" must be a list of strings or { "text": string, "motto": string }.');
+  const pageFooter = profile.pageFooter;
+  if (!isString(pageFooter) && !(Array.isArray(pageFooter) && pageFooter.length > 0 && pageFooter.every(isString))) errors.push('"pageFooter" must be a string or a list of strings.');
+  const mottos = profile.mottos;
+  if (mottos !== undefined && !(isRecord(mottos) && Object.entries(mottos).every(([key, value]) => ['index', 'search', 'toc'].includes(key) && isString(value)))) {
+    errors.push('"mottos" may only set "index", "search" and "toc" to strings.');
+  }
   if (!Array.isArray(profile.feed) || !profile.feed.every(path => isString(path) && /^\/(?:[a-z0-9-]+(?:\/[a-z0-9-]+)*)?$/.test(path))) {
     errors.push('"feed" must list site directories such as "/blog" (no trailing slash).');
   }

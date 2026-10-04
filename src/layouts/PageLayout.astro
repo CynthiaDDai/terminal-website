@@ -2,10 +2,11 @@
 import BaseLayout from './BaseLayout.astro';
 import TopNav from '../components/nav/TopNav.astro';
 import CommandBar from '../components/shell/CommandBar.astro';
-import { site } from '../config';
+import SiteFooter from '../components/nav/SiteFooter.astro';
+import Motto from '../components/content/Motto.astro';
 import { pathFromUrl } from '../lib/navigation/filesystem';
-interface Props { title: string; description?: string; eyebrow?: string; wide?: boolean; }
-const { title, description, eyebrow, wide = false } = Astro.props;
+interface Props { title: string; description?: string; eyebrow?: string; wide?: boolean; motto?: string; quote?: string; }
+const { title, description, eyebrow, wide = false, motto, quote } = Astro.props;
 const path = pathFromUrl(Astro.url.pathname);
 ---
 <BaseLayout title={title} description={description}>
@@ -14,10 +15,11 @@ const path = pathFromUrl(Astro.url.pathname);
     <CommandBar path={path} />
     <div class="page-intro">
       {eyebrow && !eyebrow.startsWith('~/') && <p class="eyebrow">{eyebrow}</p>}
+      <Motto text={motto} class="title-motto" />
       <h1>{title}</h1>
       {description && <p class="page-description">{description}</p>}
     </div>
     <slot />
   </main>
-  <footer class="page-footer"><a href="/">~ / {site.wordmark.name}</a><span>{site.pageFooter}</span><a href="/rss.xml">RSS ↗</a></footer>
+  <SiteFooter path={path} quote={quote} />
 </BaseLayout>

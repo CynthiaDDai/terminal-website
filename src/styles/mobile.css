@@ -39,7 +39,8 @@ details[open] > summary .when-closed { display: none; }
 .mobile-command-form .prompt-tail { flex: 0 1 auto; }
 .mobile-complete { min-height: 44px; padding: .5rem 0; border: 0; color: var(--terminal-cyan); font-size: .75rem; }
 .mobile-theme-choice { min-height: 60px; gap: 1rem; }
-.mobile-theme-choice > .mobile-palette { flex: 0 0 36px; height: 36px; border: 1px solid var(--chrome-border); background: var(--preview-bg); color: var(--preview-accent); display: grid; place-items: center; font-size: 1.4rem; }
+.mobile-row.mobile-theme-choice > .mobile-palette { flex: 0 0 36px; height: 36px; border: 1px solid var(--chrome-border); background: var(--preview-bg); color: var(--preview-accent); display: grid; place-items: center; font-size: 1.4rem; }
+.mobile-theme-swatch { display: inline-block; vertical-align: middle; }
 .mobile-theme-check { margin-left: auto; color: var(--terminal-success); visibility: hidden; }
 .mobile-theme-choice[aria-pressed='true'] .mobile-theme-check { visibility: visible; }
 html:has(dialog[open]) { overflow: hidden; }

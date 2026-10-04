@@ -5,12 +5,14 @@ import CommandBar from '../components/shell/CommandBar.astro';
 import type { MarkdownHeading } from 'astro';
 import { normalizePath, pathFromUrl } from '../lib/navigation/filesystem';
 import { site } from '../config';
+import SiteFooter from '../components/nav/SiteFooter.astro';
+import Motto from '../components/content/Motto.astro';
 interface Props {
   title: string; description: string; date?: Date; updated?: Date; tags: string[];
   example?: boolean; headings: MarkdownHeading[]; parentTitle: string; status?: string; repo?: string; demo?: string;
-  authors?: string; venue?: string; links?: Record<string, string>;
+  authors?: string; venue?: string; links?: Record<string, string>; motto?: string;
 }
-const { title, description, date, updated, tags, example, headings, parentTitle, status, repo, demo, authors, venue, links = {} } = Astro.props;
+const { title, description, date, updated, tags, example, headings, parentTitle, status, repo, demo, authors, venue, links = {}, motto } = Astro.props;
 const path = pathFromUrl(Astro.url.pathname);
 const parentPath = normalizePath('..', path);
 const linkList = Object.entries(links);
@@ -30,6 +32,7 @@ const formatDate = (value: Date) => value.toLocaleDateString(site.dateLocale, { 
     <CommandBar path={path} />
     <article>
       <header class="article-heading">
+        <Motto text={motto} class="title-motto" />
         <h1>{title}</h1>
         {authors && <p class="article-byline">{authors}</p>}
         {description && <p class="article-deck">{description}</p>}
@@ -38,7 +41,7 @@ const formatDate = (value: Date) => value.toLocaleDateString(site.dateLocale, { 
         {(repo || demo || linkList.length > 0) && <div class="project-links">{repo && <a href={repo}>Source code ↗</a>}{demo && <a href={demo}>Visit project ↗</a>}{linkList.map(([label, url]) => <a href={url}>{label}{/^https?:/.test(url) && ' ↗'}</a>)}</div>}
       </header>
       {tocSize >= 2 && <nav class="toc" aria-label="Table of contents"><div class="toc-body">
-        <p class="toc-label" aria-hidden="true">on this page</p>
+        <p class="toc-label" aria-hidden="true">on this page<Motto text={site.mottos?.toc} /></p>
         <ol>{sections.map(({ heading, children }, index) => {
           const last = index === sections.length - 1;
           return <li><a href={`#${heading.slug}`}><span class="toc-branch" aria-hidden="true">{last ? '└' : '├'}</span><span>{heading.text}</span></a>
@@ -51,4 +54,5 @@ const formatDate = (value: Date) => value.toLocaleDateString(site.dateLocale, { 
     </article>
     <div class="article-bottom"><a href={parentPath}>← Back to {parentTitle}</a><a href="#main">Back to top ↑</a></div>
   </main>
+  <SiteFooter path={path} />
 </BaseLayout>

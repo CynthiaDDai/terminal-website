@@ -1,4 +1,5 @@
 ---
+import Motto from '../components/content/Motto.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Prompt from '../components/shell/Prompt.astro';
 import { site } from '../config';
@@ -36,6 +37,6 @@ const Content = rendered?.Content;
     </div>
   </main>
   {Content && <section class="page-main" aria-label={tree.root.title}><h2>{tree.root.title}</h2><div class="prose"><Content /></div>{tree.root.frontmatter.show_children !== false && <ContentList entries={tree.root.children} groups={tree.root.frontmatter.groups} />}</section>}
-  <footer class="home-footer"><span>{site.homeFooter.map((word, index) => <>{index > 0 && <>{' '}<span aria-hidden="true">·</span>{' '}</>}{word}</>)}</span><button class="theme-footer" type="button" data-cycle-theme aria-label="Switch color theme"><span class="theme-swatch" aria-hidden="true"></span><span data-theme-name>{defaultTheme.name}</span></button></footer>
+  <footer class="home-footer"><span>{site.homeFooter.map((word, index) => <>{index > 0 && <>{' '}<span class="home-footer-dot" aria-hidden="true">·</span>{' '}</>}{typeof word === 'string' ? word : <>{word.text}<Motto text={word.motto} /></>}</>)}</span><button class="theme-footer" type="button" data-cycle-theme aria-label="Switch color theme"><span class="theme-swatch" aria-hidden="true"></span><span data-theme-name>{defaultTheme.name}</span></button></footer>
   <noscript><p class="noscript-note">The prompt needs JavaScript. {navigation.map(entry => <a href={entry.path}>{entry.title}{' '}</a>)} work without it.</p></noscript>
 </BaseLayout>

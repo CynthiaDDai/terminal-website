@@ -16,6 +16,7 @@ export interface ContentMetadata {
   venue?: string;
   links?: Record<string, string>;
   example?: boolean;
+  motto?: string;
   [key: string]: unknown;
 }
 

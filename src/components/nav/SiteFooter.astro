@@ -1,0 +1,14 @@
+---
+import { site } from '../../config';
+interface Props { path: string; quote?: string; }
+const { path, quote } = Astro.props;
+const lines = [site.pageFooter].flat();
+// Each page keeps its own line, chosen from its path, so a page reads the same on every visit.
+const hash = [...path].reduce((sum, character) => (sum * 31 + character.codePointAt(0)!) >>> 0, 7);
+const line = quote ?? lines[hash % lines.length];
+---
+<footer class="page-footer">
+  <a href="/">~ / {site.wordmark.name}{site.wordmark.suffix}</a>
+  <span class="page-footer-line" lang={/[\u3000-\u9fff]/.test(line) ? 'zh' : undefined}>{line}</span>
+  <a href="/rss.xml">RSS ↗</a>
+</footer>

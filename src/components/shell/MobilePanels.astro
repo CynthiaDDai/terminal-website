@@ -28,6 +28,6 @@ const { path } = Astro.props;
 <dialog id="mobile-theme-panel" class="touch-panel" aria-labelledby="mobile-theme-title">
   <header class="touch-panel-heading"><h2 id="mobile-theme-title">Theme</h2><button type="button" class="quiet-button" data-close-panel aria-label="Close themes" autofocus><span aria-hidden="true">×</span></button></header>
   <div class="touch-panel-content">
-    {themes.map(theme => <button type="button" class="mobile-row mobile-theme-choice" data-select-theme={theme.id} aria-pressed="false"><span class="mobile-palette" style={`--preview-bg:${theme.chrome.background};--preview-fg:${theme.chrome.foreground};--preview-accent:${theme.chrome.accent}`} aria-hidden="true">◐</span><span>{theme.name}</span><span class="mobile-theme-check" aria-hidden="true">✓</span></button>)}
+    {themes.map(theme => <button type="button" class="mobile-row mobile-theme-choice" data-select-theme={theme.id} aria-pressed="false"><span class="mobile-palette" style={`--preview-bg:${theme.chrome.background};--preview-fg:${theme.chrome.foreground};--preview-accent:${theme.chrome.accent}`} aria-hidden="true">●</span><span>{theme.name}</span><span class="mobile-theme-check" aria-hidden="true">✓</span></button>)}
   </div>
 </dialog>
