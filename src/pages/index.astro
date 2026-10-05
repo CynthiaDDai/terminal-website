@@ -1,9 +1,9 @@
 ---
-import Motto from '../components/content/Motto.astro';
+import Paired from '../components/content/Paired.astro';
+import ThemeSwitch from '../components/nav/ThemeSwitch.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Prompt from '../components/shell/Prompt.astro';
 import { site } from '../config';
-import { defaultTheme } from '../lib/theme/registry';
 import MobileIndex from '../components/nav/MobileIndex.astro';
 import MobileTools from '../components/nav/MobileTools.astro';
 import { getEntry, render } from 'astro:content';
@@ -19,7 +19,7 @@ const rendered = rootEntry ? await render(rootEntry) : undefined;
 const Content = rendered?.Content;
 ---
 <BaseLayout home homeContent={!!rootEntry} title={rootEntry ? tree.root.title : undefined} description={rootEntry ? tree.root.description : undefined}>
-  <header class="home-header"><a class="home-wordmark" href={about?.path ?? '/'}>{site.wordmark.name}<span>{site.wordmark.suffix}</span></a><span class="home-caption">{site.caption}</span></header>
+  <header class="home-header"><span><a class="home-wordmark" href={about?.path ?? '/'}>{site.wordmark.name}<span>{site.wordmark.suffix}</span></a><span class="home-caption">{site.caption}</span></span><ThemeSwitch /></header>
   <main id="main" class="terminal-stage" tabindex="-1">
     <h1 class="sr-only">{site.name}</h1>
     <div class="mobile-home">
@@ -37,6 +37,6 @@ const Content = rendered?.Content;
     </div>
   </main>
   {Content && <section class="page-main" aria-label={tree.root.title}><h2>{tree.root.title}</h2><div class="prose"><Content /></div>{tree.root.frontmatter.show_children !== false && <ContentList entries={tree.root.children} groups={tree.root.frontmatter.groups} />}</section>}
-  <footer class="home-footer"><span>{site.homeFooter.map((word, index) => <>{index > 0 && <>{' '}<span class="home-footer-dot" aria-hidden="true">·</span>{' '}</>}{typeof word === 'string' ? word : <>{word.text}<Motto text={word.motto} /></>}</>)}</span><button class="theme-footer" type="button" data-cycle-theme aria-label="Switch color theme"><span class="theme-swatch" aria-hidden="true"></span><span data-theme-name>{defaultTheme.name}</span></button></footer>
+  <footer class="home-footer"><span>{site.homeFooter.map((word, index) => <>{index > 0 && <>{' '}<span class="home-footer-dot" aria-hidden="true">·</span>{' '}</>}{typeof word === 'string' ? word : <Paired text={word.text} motto={word.motto} />}</>)}</span><a class="home-footer-feed" href="/rss.xml">RSS ↗</a></footer>
   <noscript><p class="noscript-note">The prompt needs JavaScript. {navigation.map(entry => <a href={entry.path}>{entry.title}{' '}</a>)} work without it.</p></noscript>
 </BaseLayout>

@@ -1,13 +1,13 @@
 ---
 import EdgeLinks from './EdgeLinks.astro';
-import Motto from '../content/Motto.astro';
+import Paired from '../content/Paired.astro';
 import { site } from '../../config';
 interface Props { path: string; }
 const { path } = Astro.props;
 ---
 <aside class="edge-navigation">
   <div class="edge-menu">
-    <button class="edge-handle" type="button" data-toggle-edge aria-label="Explore the site" aria-expanded="false" aria-controls="desktop-edge-links"><Motto text={site.mottos?.index} class="edge-motto" /><span class="edge-label">index</span><span class="edge-mark" aria-hidden="true">+</span></button>
+    <button class="edge-handle" type="button" data-toggle-edge aria-label="Explore the site" aria-expanded="false" aria-controls="desktop-edge-links"><svg class="edge-lantern" viewBox="0 0 24 28" aria-hidden="true"><path d="M12 0v3.5" /><rect x="8" y="3.5" width="8" height="2.2" rx=".7" /><ellipse class="edge-lantern-glow" cx="12" cy="12.6" rx="10" ry="7" /><path d="M12 5.7v13.8M7.4 6.3q-3.2 6.3 0 12.6M16.6 6.3q3.2 6.3 0 12.6" /><rect x="8" y="19.5" width="8" height="2.2" rx=".7" /><path d="M12 21.7v5.6M10.2 22.7v4.2M13.8 22.7v4.2" /></svg><span class="edge-label"><Paired text="index" motto={site.mottos?.index} class="edge-paired" /></span><span class="edge-mark" aria-hidden="true">+</span></button>
     <nav id="desktop-edge-links" aria-label="Explore the site"><EdgeLinks path={path} /></nav>
   </div>
 </aside>

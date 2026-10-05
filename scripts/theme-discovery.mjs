@@ -32,15 +32,16 @@ export function discoverThemeFolders(root, settings = {}) {
 }
 
 // Discover directories on the server, then ship only normalized JSON to browser consumers.
-export function themeCatalogPlugin() {
+// The site uses src/themes and src/config/themes.json; the test suites point these at tests/fixtures/site.
+export function themeCatalogPlugin({ themes = process.env.SITE_THEMES_DIR || 'src/themes', settings = process.env.SITE_THEMES_CONFIG || 'src/config/themes.json' } = {}) {
   const id = 'virtual:site-themes';
   const resolvedId = `\0${id}`;
   let root, settingsPath;
   return {
     name: 'site-theme-folders',
     configResolved(config) {
-      root = resolve(config.root, 'src/themes');
-      settingsPath = resolve(config.root, 'src/config/themes.json');
+      root = resolve(config.root, themes);
+      settingsPath = resolve(config.root, settings);
     },
     resolveId(source) { if (source === id) return resolvedId; },
     load(source) {

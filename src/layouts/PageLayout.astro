@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import TopNav from '../components/nav/TopNav.astro';
 import CommandBar from '../components/shell/CommandBar.astro';
 import SiteFooter from '../components/nav/SiteFooter.astro';
-import Motto from '../components/content/Motto.astro';
+import Paired from '../components/content/Paired.astro';
 import { pathFromUrl } from '../lib/navigation/filesystem';
 interface Props { title: string; description?: string; eyebrow?: string; wide?: boolean; motto?: string; quote?: string; }
 const { title, description, eyebrow, wide = false, motto, quote } = Astro.props;
@@ -15,8 +15,7 @@ const path = pathFromUrl(Astro.url.pathname);
     <CommandBar path={path} />
     <div class="page-intro">
       {eyebrow && !eyebrow.startsWith('~/') && <p class="eyebrow">{eyebrow}</p>}
-      <Motto text={motto} class="title-motto" />
-      <h1>{title}</h1>
+      <h1><Paired text={title} motto={motto} /></h1>
       {description && <p class="page-description">{description}</p>}
     </div>
     <slot />

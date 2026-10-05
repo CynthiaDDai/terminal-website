@@ -1,12 +1,13 @@
 ---
 import { site } from '../../config';
 import MobileIndex from './MobileIndex.astro';
+import ThemeSwitch from './ThemeSwitch.astro';
 const { path } = Astro.props;
 ---
 <header class="top-nav">
   <a class="site-wordmark" href="/">{site.wordmark.name}<span>{site.wordmark.suffix}</span></a>
   <div class="nav-actions">
-    <button class="quiet-button theme-button" data-cycle-theme aria-label="Switch color theme" title="Switch color theme"><span class="theme-swatch" aria-hidden="true"></span></button>
+    <ThemeSwitch />
   </div>
   <details class="mobile-nav"><summary aria-label="Explore the site">index <span class="when-closed" aria-hidden="true">+</span><span class="when-open" aria-hidden="true">×</span></summary><MobileIndex path={path} /></details>
 </header>

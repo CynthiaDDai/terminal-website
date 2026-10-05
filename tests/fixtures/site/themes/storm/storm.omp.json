@@ -1,0 +1,195 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 4,
+  "console_title_template": "{{ if .Root }}[root] {{ end }}{{ .UserName }}@{{ .HostName }} · {{ .Folder }}",
+  "palette": {
+    "bg": "#24283b",
+    "bg-dark": "#1f2335",
+    "surface": "#292e42",
+    "muted": "#565f89",
+    "fg-soft": "#a9b1d6",
+    "fg": "#c0caf5",
+    "red": "#f7768e",
+    "orange": "#ff9e64",
+    "yellow": "#e0af68",
+    "green": "#9ece6a",
+    "teal": "#73daca",
+    "cyan": "#7dcfff",
+    "blue": "#7aa2f7",
+    "purple": "#9d7cd8",
+    "magenta": "#bb9af7"
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": "┌─"
+        },
+        {
+          "type": "session",
+          "alias": "Session",
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": "[{{ if .Root }}<p:red></>{{ else if .SSHSession }}<p:cyan>󰣀</>{{ else }}<p:magenta>󰄛</>{{ end }} <p:fg>{{ .UserName }}</> <p:muted>::</> <p:fg-soft>{{ .HostName }}</>]"
+        },
+        {
+          "type": "text",
+          "alias": "NixShell",
+          "style": "plain",
+          "foreground": "p:cyan",
+          "template": "{{ if or (and .Env.NIX_SHELL_LEVEL (ne .Env.NIX_SHELL_LEVEL \"0\")) .Env.IN_NIX_SHELL }}[ <p:fg-soft>nix</>]{{ end }}"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "overflow": "hide",
+      "segments": [
+        {
+          "type": "aws",
+          "style": "plain",
+          "foreground": "p:fg-soft",
+          "foreground_templates": [
+            "{{ if contains \"prod\" (lower .Profile) }}p:red{{ end }}"
+          ],
+          "template": "[<p:orange></> {{ .Profile }}{{ if .Region }}<p:muted>@</>{{ .Region }}{{ end }}]"
+        },
+        {
+          "type": "az",
+          "style": "plain",
+          "foreground": "p:fg-soft",
+          "foreground_templates": [
+            "{{ if contains \"prod\" (lower .Name) }}p:red{{ end }}"
+          ],
+          "template": "[<p:blue></> {{ .Name }}]"
+        },
+        {
+          "type": "kubectl",
+          "alias": "Kubectl",
+          "style": "plain",
+          "foreground": "p:cyan",
+          "foreground_templates": [
+            "{{ if or (contains \"prod\" (lower .Context)) (contains \"prod\" (lower .Namespace)) }}p:red{{ end }}"
+          ],
+          "template": "[⎈ {{ .Context }}{{ if .Namespace }}<p:muted>/</>{{ .Namespace }}{{ end }}]"
+        },
+        {
+          "type": "node",
+          "style": "plain",
+          "min_width": 92,
+          "foreground": "p:green",
+          "template": "[󰎙 {{ .Major }}.{{ .Minor }}]",
+          "options": {
+            "display_mode": "context",
+            "fetch_package_manager": true,
+            "cache_duration": "10m"
+          }
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "min_width": 92,
+          "foreground": "p:yellow",
+          "template": "[ {{ if .Venv }}{{ .Venv }}<p:muted>/</>{{ end }}{{ .Major }}.{{ .Minor }}]",
+          "options": {
+            "display_mode": "context",
+            "fetch_virtual_env": true,
+            "display_default": false,
+            "cache_duration": "10m"
+          }
+        },
+        {
+          "type": "go",
+          "style": "plain",
+          "min_width": 100,
+          "foreground": "p:cyan",
+          "template": "[󰟓 {{ .Major }}.{{ .Minor }}]",
+          "options": {
+            "display_mode": "context",
+            "cache_duration": "10m"
+          }
+        },
+        {
+          "type": "executiontime",
+          "alias": "Executiontime",
+          "style": "plain",
+          "foreground": "p:purple",
+          "template": "[󱎫 {{ .FormattedMs }}]",
+          "options": {
+            "threshold": 2000,
+            "style": "austin"
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": "└─"
+        },
+        {
+          "type": "path",
+          "alias": "Path",
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": "[<p:cyan></> <p:fg><b>{{ .Path }}</b></>]",
+          "options": {
+            "style": "powerlevel",
+            "max_width": 42,
+            "folder_separator_icon": "/",
+            "home_icon": "~"
+          }
+        },
+        {
+          "type": "git",
+          "alias": "Git",
+          "style": "plain",
+          "foreground": "p:magenta",
+          "template": "[ {{ .HEAD }}{{ if .Staging.Changed }} <p:green>●{{ add .Staging.Added .Staging.Modified .Staging.Deleted .Staging.Unmerged }}</>{{ end }}{{ if gt (add .Working.Added .Working.Modified .Working.Deleted) 0 }} <p:yellow>~{{ add .Working.Added .Working.Modified .Working.Deleted }}</>{{ end }}{{ if gt .Working.Untracked 0 }} <p:orange>?{{ .Working.Untracked }}</>{{ end }}{{ if gt .Working.Unmerged 0 }} <p:red>!{{ .Working.Unmerged }}</>{{ end }}{{ if gt .PushAhead 0 }} <p:cyan>⇡{{ .PushAhead }}</>{{ end }}{{ if gt .PushBehind 0 }} <p:red>⇣{{ .PushBehind }}</>{{ end }}{{ if gt .StashCount 0 }} <p:purple>≡{{ .StashCount }}</>{{ end }}]",
+          "options": {
+            "branch_icon": "",
+            "untracked_modes": {
+              "*": "normal"
+            },
+            "fetch_status": true,
+            "fetch_stash_count": true
+          }
+        },
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "p:red",
+          "template": "{{ if .Error }}[ {{ .Code }}]{{ end }}"
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:green",
+          "foreground_templates": ["{{ if .Root }}p:red{{ end }}"],
+          "template": " > "
+        }
+      ]
+    }
+  ],
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground": "p:fg-soft",
+    "newline": true,
+    "template": "<p:muted>└─</>{{ if or .Root .Segments.Session.SSHSession }}<p:muted>[</>{{ if .Root }}<p:red></>{{ else }}<p:cyan>󰣀</>{{ end }} <p:fg-soft>{{ .UserName }}@{{ .HostName }}</><p:muted>]</>{{ end }}<p:muted>[</><p:fg-soft>{{ .Segments.Path.Path }}</><p:muted>]</>{{ if .Segments.Contains \"Git\" }}<p:muted>[</><p:magenta></>{{ if .Segments.Git.Working.Changed }} <p:yellow>~</>{{ else }} <p:green>✓</>{{ end }}{{ if .Segments.Git.Behind }} <p:cyan>⇣</>{{ end }}<p:muted>]</>{{ end }}{{ if or (and .Env.NIX_SHELL_LEVEL (ne .Env.NIX_SHELL_LEVEL \"0\")) .Env.IN_NIX_SHELL }}<p:muted>[</><p:cyan></><p:muted>]</>{{ end }}{{ if .Segments.Contains \"Kubectl\" }}<p:muted>[</><p:cyan>⎈ {{ .Segments.Kubectl.Context }}</><p:muted>]</>{{ end }} <p:green>></> "
+  },
+  "final_space": true,
+  "terminal_background": "p:bg"
+}

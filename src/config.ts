@@ -16,6 +16,8 @@ export interface SiteProfile {
   notFound: { title: string; description: string; motto?: string; quote?: string };
   // Decorative words beside the index handle, search and table of contents labels.
   mottos?: { index?: string; search?: string; toc?: string };
+  // The theme switch's tooltip, and a label for each theme ID in place of the theme's name.
+  themeSwitch?: { title?: string; labels?: Record<string, FooterWord> };
   feed: string[]; email: string; github: string; socials: SocialLink[]; friends: FriendLink[]; activityLimit: number;
 }
 

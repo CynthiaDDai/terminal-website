@@ -2,15 +2,14 @@
 
 A theme is an [Oh My Posh](https://ohmyposh.dev) prompt configuration. The site draws the prompt from it and derives the colors of every page from its palette: prompt, navigation, articles, command output and code highlighting. Visitors switch themes with `theme <name>` or the theme button, and their choice is saved in their browser.
 
-The site includes five themes:
+The site includes two themes:
 
 | ID | Look | Source |
 | --- | --- | --- |
 | `storm` | Dark, default | Original layout with the Tokyo Night Storm palette |
-| `storm_day` | Light | Storm with a light palette |
-| `paper` | Light, warm | Storm with a paper-like palette |
-| `1_shell` | Dark | Oh My Posh's `1_shell`, unchanged |
-| `if_tea` | Dark | Oh My Posh's `if_tea`, unchanged |
+| `pine_ink` | Light | Storm's layout in ink on rice paper: pine-soot ink, indigo, azurite and cinnabar |
+
+More themes are in the [Oh My Posh theme gallery](https://ohmyposh.dev/docs/themes); download any `.omp.json` from there and [add it](#add-a-theme).
 
 Credits and licenses are in [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md). If you add someone else's theme, add its notice there too.
 
@@ -153,7 +152,7 @@ To design the mobile prompt yourself, add `theme_mobile.json` to the theme folde
 
 `prompt` is an Oh My Posh prompt object and can use the main theme's palette. The file also accepts `mode`, `chrome`, `prose`, `syntax` and `segmentOverrides`, as in `.web.json`; colors not set here are inherited from the desktop theme. The mobile layout itself is shared by all themes: this file changes the prompt and colors, not the navigation or page structure.
 
-Storm and Storm Day include mobile companions. The other themes use the fallback.
+Both included themes have mobile companions. Themes you add use the fallback until you write one.
 
 ## Broken companion files
 
@@ -168,4 +167,4 @@ In development, adding, changing or removing any file in `src/themes/`, or editi
 
 ## Making a variant
 
-Storm Day and Paper are Storm with a different `palette` block; Storm Day's `.web.json` also sets `"mode": "light"`. To make your own variant, copy a theme folder, rename the folder and its files, and change the palette.
+Pine Ink is Storm with a different `palette` block, and its `.web.json` sets `"mode": "light"`. To make your own variant, copy a theme folder, rename the folder and its files, and change the palette. The palette names map to the site like this: `bg`, `fg`, `muted` and `surface` are the page, text, quiet text and borders; `blue` is the main accent; `cyan` colors links; `magenta`, `green` and `yellow` color code keywords, strings and constants; `red` marks errors.

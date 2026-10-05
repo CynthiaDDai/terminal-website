@@ -84,10 +84,10 @@ The build checks file names, `site.json`, types and every internal link, then wr
 
 ## 5. Choose a theme
 
-Type `theme` on the site to list the themes, and `theme storm_day` to try one. To change the default for new visitors, edit `src/config/themes.json`:
+Type `theme` on the site to list the themes, and `theme pine_ink` to try one. To change the default for new visitors, edit `src/config/themes.json`:
 
 ```json
-{ "default": "storm_day", "order": ["storm_day", "storm", "paper"] }
+{ "default": "pine_ink", "order": ["pine_ink", "storm"] }
 ```
 
 To make your own theme from an Oh My Posh prompt, see [Themes](themes.md).

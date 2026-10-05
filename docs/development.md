@@ -80,8 +80,10 @@ The suites switch to it with three environment variables, which you can also use
 | `SITE_CONTENT_DIR` | `src/content` | `tests/fixtures/site/content` |
 | `SITE_PROFILE` | `src/config/site.json` | `tests/fixtures/site/site.json` |
 | `SITE_OUT_DIR` | `dist` | `.fixture-dist` |
+| `SITE_THEMES_DIR` | `src/themes` | `tests/fixtures/site/themes` |
+| `SITE_THEMES_CONFIG` | `src/config/themes.json` | `tests/fixtures/site/themes.json` |
 
-Your real content is checked by `npm run build` itself, so editing it cannot break the test suites.
+The fixture's themes include Oh My Posh's `1_shell` and `if_tea`, which exercise palette-less colors, icons and diamond caps. Your real content and themes are checked by `npm run build` itself, so editing them cannot break the test suites.
 
 ### Suites
 

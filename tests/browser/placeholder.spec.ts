@@ -47,14 +47,42 @@ test('profile values fill the wordmark, footers, contact page and fastfetch', as
   await expect(page.locator('.page-footer-line')).toHaveText(/^(Take your time\.|Read slowly\.)$/);
 });
 
+test('the theme switch and wordmark sit in the same place on every page', async ({ page }) => {
+  for (const width of [1440, 820]) {
+    await page.setViewportSize({ width, height: 900 });
+    const places = new Set<string>();
+    for (const path of ['/', '/blog', '/blog/placeholder-hello', '/no-such-page']) {
+      await page.goto(path);
+      const theme = await page.getByRole('button', { name: 'Switch color theme' }).boundingBox();
+      const wordmark = await page.locator('.home-wordmark, .site-wordmark').boundingBox();
+      places.add([theme!.x, theme!.y, wordmark!.x, wordmark!.y].map(Math.round).join(','));
+    }
+    expect([...places]).toHaveLength(1);
+  }
+});
+
+test('the theme switch shows each theme’s label from site.json, or its name', async ({ page }) => {
+  await page.goto('/blog');
+  const toggle = page.getByRole('button', { name: 'Switch color theme' });
+  const label = toggle.locator('[data-theme-label]:visible');
+  await expect(toggle).toHaveAttribute('title', 'Night and day');
+  await expect(label).toHaveText('dusk瞑为夜');
+  await toggle.click();
+  await expect(label).toHaveText('dawn');
+  await page.reload();
+  await expect(label).toHaveText('dawn');
+  await toggle.click();
+  await expect(label).toHaveText('Paper');
+});
+
 test('decorative mottos stay out of the accessible text, and every content page shares one footer', async ({ page }) => {
   await page.goto('/blog');
-  const motto = page.locator('.title-motto');
+  const motto = page.locator('h1 .paired-motto');
   await expect(motto).toHaveText('且听风吟');
   await expect(motto).toHaveAttribute('aria-hidden', 'true');
   await expect(motto).toHaveAttribute('lang', 'zh');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Blog');
-  await expect(page.locator('.edge-motto')).toHaveText('开卷如晤');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName('Blog');
+  await expect(page.locator('.edge-paired .paired-motto')).toHaveText('开卷如晤');
   await expect(page.locator('.edge-handle')).toHaveAccessibleName('Explore the site');
   await expect(page.locator('#search-title')).toHaveText('Search this space寻寻觅觅');
   for (const path of ['/blog', '/blog/placeholder-hello', '/no-such-page']) {
@@ -65,7 +93,7 @@ test('decorative mottos stay out of the accessible text, and every content page 
     await expect(footer.locator('.page-footer-line')).toHaveText(/^(Take your time\.|Read slowly\.)$/);
   }
   await page.goto('/blog/placeholder-hello');
-  await expect(page.locator('.toc-label .motto')).toHaveText('按图索骥');
+  await expect(page.locator('.toc-label .paired-motto')).toHaveText('按图索骥');
 });
 
 test('every document uses the article layout and returns to its parent by title', async ({ page }) => {

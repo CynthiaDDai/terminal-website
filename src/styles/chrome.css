@@ -8,23 +8,43 @@
 .home-page.home-content { height: auto; min-height: 100dvh; overflow: visible; }
 .home-content .terminal-stage { min-height: 70vh; flex-shrink: 0; }
 .home-header, .home-footer { flex-shrink: 0; }
+/* The home header has the content pages' top bar geometry, so the wordmark and theme switch never move. */
+.home-header { box-sizing: border-box; width: 100%; max-width: 1320px; min-height: 100px; margin: 0 auto; padding: 1.5rem 3rem; font-size: .78rem; }
 .home-footer { margin-top: auto; width: 100%; gap: 1rem; }
 .home-footer-dot { margin: 0 .55em; color: var(--terminal-accent-1); }
-.theme-footer { border: 0; display: inline-flex; align-items: center; gap: .75rem; color: var(--site-muted); padding: .5rem 0; }
+.theme-switch { border: 0; display: inline-flex; align-items: center; gap: .75rem; text-align: left; padding: .6rem 0; font-family: var(--font-mono); font-size: .75rem; color: var(--site-muted); }
+.theme-switch:hover, .theme-switch:focus-visible { color: var(--site-fg); }
+.theme-switch .theme-swatch { margin-right: .25rem; transition: transform .15s ease; }
+.theme-switch:hover .theme-swatch, .theme-switch:focus-visible .theme-swatch { transform: scale(1.25); }
+.home-caption { margin-left: 1.2rem; }
+.home-footer-feed { text-decoration: none; }
 .theme-swatch { height: .55rem; width: .55rem; border-radius: 50%; background: var(--terminal-accent-1); box-shadow: .25rem 0 0 var(--terminal-accent-2); }
 .edge-navigation { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 10; font-family: var(--font-mono); }
-.edge-menu { position: relative; }
-.edge-handle { border: 0; cursor: pointer; position: absolute; right: 0; top: 50%; transform: translateY(-50%); min-height: 160px; padding: 1.2rem 0; width: 48px; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-direction: column; color: var(--site-muted); }
+/* Only the handle and the open menu respond to the pointer; the hidden menu's empty box must not open it. */
+.edge-menu { position: relative; pointer-events: none; }
+.edge-handle, .edge-menu > nav { pointer-events: auto; }
+.edge-handle { border: 0; cursor: pointer; position: absolute; right: 0; top: 50%; transform: translateY(-50%); min-height: 160px; padding: 1.2rem 14px 1.2rem 0; width: 48px; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-direction: column; color: var(--site-muted); }
 .mobile-nav > summary::-webkit-details-marker { display: none; }
 .edge-handle::before { content: ''; width: 1px; top: 0; bottom: 0; background: var(--chrome-accent); opacity: .35; position: absolute; right: 12px; }
-.edge-label { font-size: .7rem; writing-mode: vertical-rl; letter-spacing: .15em; }
-.motto.edge-motto { writing-mode: vertical-rl; margin: 0; font-size: 1rem; letter-spacing: .4em; color: var(--site-fg); opacity: .75; }
-.edge-motto + .edge-label { font-size: .6rem; }
-/* Decorative words (Motto.astro): set in the CJK font, quieter than the label they accompany. */
-.motto { margin-left: .9em; font-family: var(--font-cjk), serif; font-weight: 400; letter-spacing: .25em; color: var(--site-muted); white-space: nowrap; }
-.title-motto { display: block; margin: 0 0 1rem; font-size: 1rem; letter-spacing: .5em; color: var(--terminal-accent-1); opacity: .85; }
+.edge-label { font-size: .75rem; writing-mode: vertical-rl; letter-spacing: .15em; }
+/* A label and its motto (Paired.astro) read as one unit: the motto sits right under the label, in the CJK font,
+   sized in proportion to it. column-reverse would put the motto on top. */
+.paired { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0; vertical-align: top; }
+.paired-motto { margin-top: -.15em; font-family: var(--font-cjk), serif; font-weight: 400; font-size: .82em; letter-spacing: .12em; line-height: 1.1; color: var(--site-muted); white-space: nowrap; }
+.home-footer .paired-motto, .theme-switch .paired-motto { margin-top: .1em; font-size: 1em; letter-spacing: .15em; }
+/* Under a page title the motto is set flush right, like a seal at the end of a line; the negative margin
+   cancels the tracking after the last character so it ends exactly under the title. */
+h1 .paired { align-items: flex-end; }
+h1 .paired-motto { margin: -.05em -.55em 0 0; font-size: .38em; letter-spacing: .55em; color: var(--terminal-accent-1); }
+/* The index handle is written vertically: "index" and its motto stand side by side as two columns, "index" leading. */
+.edge-paired { writing-mode: vertical-rl; flex-direction: column; align-items: flex-start; }
+.edge-paired .paired-text { font-size: .85rem; letter-spacing: .3em; color: var(--site-fg); }
+.edge-paired .paired-motto { margin: 0 .15rem 0 0; font-size: .68rem; letter-spacing: .25em; }
+/* A paper lantern hangs above the label. */
+.edge-lantern { width: 22px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; color: var(--terminal-error); }
+.edge-lantern-glow { fill: currentColor; fill-opacity: .14; }
 .edge-mark { color: var(--chrome-accent); }
-.edge-navigation nav { width: 230px; background: var(--site-bg); padding: 1.5rem 2.8rem 1.5rem 1.5rem; border-left: 1px solid var(--chrome-border); }
+.edge-navigation nav { width: 280px; background: var(--site-bg); padding: 1.5rem 4rem 1.5rem 1.5rem; border-left: 1px solid var(--chrome-border); }
 .edge-navigation nav a { display: flex; align-items: center; gap: .75rem; padding: .65rem 0; color: var(--site-muted); text-decoration: none; font-size: .85rem; }
 .edge-navigation nav a:hover { color: var(--terminal-cyan); }
 .edge-navigation nav a[aria-current] { color: var(--terminal-accent-1); }
@@ -37,16 +57,14 @@
 .nav-arrow { margin-left: auto; color: var(--terminal-accent-1); }
 @media (min-width: 701px) and (pointer: fine) {
   .edge-menu > nav { visibility: hidden; opacity: 0; transform: translateX(15px); transition: opacity .18s ease, transform .18s ease, visibility .18s; }
-  .edge-menu:hover > nav, .edge-menu:focus-within > nav, .edge-menu.is-expanded > nav { visibility: visible; opacity: 1; transform: none; }
+  /* Without the site script, plain hover opens the menu; with it, .is-open adds a short grace period before closing. */
+  html:not([data-site-ready]) .edge-menu:hover > nav, .edge-menu.is-open > nav, .edge-menu:focus-within > nav, .edge-menu.is-expanded > nav { visibility: visible; opacity: 1; transform: none; }
 }
 .top-nav { max-width: 1320px; margin: auto; display: flex; align-items: center; min-height: 100px; padding: 1.5rem 3rem; gap: 2rem; font-family: var(--font-mono); font-size: .78rem; }
 .site-wordmark { flex: 1; min-width: 0; text-decoration: none; font-size: .9rem; }
 .site-wordmark span { color: var(--site-muted); }
 .path-separator { color: var(--site-muted); }
 .nav-actions { display: flex; align-items: center; gap: .6rem; }
-.theme-button { display: inline-flex; padding: .8rem 1.05rem .8rem .8rem; }
-.theme-button .theme-swatch { transition: transform .15s ease; }
-.theme-button:hover .theme-swatch, .theme-button:focus-visible .theme-swatch { transform: scale(1.25); }
 .mobile-nav { display: none; }
 .page-main { width: min(100% - 3rem, 760px); margin: 3rem auto 8rem; min-height: 50vh; }
 .page-main.wide { max-width: 880px; width: min(100% - 3rem, 880px); }
@@ -81,14 +99,15 @@ h1 { font-size: clamp(2.35rem, 4.3vw, 3.9rem); font-weight: 500; line-height: 1.
 .content-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.6rem; }
 .page-footer { width: min(100% - 3rem, 1100px); margin: 0 auto; padding: 2rem 0; border-top: 1px solid var(--chrome-border); display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-family: var(--font-mono); font-size: .7rem; color: var(--site-muted); }
 .page-footer a { text-decoration: none; }
-.page-footer-line[lang] { font-size: .85rem; letter-spacing: .1em; }
+.page-footer-line[lang] { font-size: 1rem; letter-spacing: .12em; }
+.page-footer-line::before { content: '❦'; margin-right: .7em; color: var(--terminal-accent-1); opacity: .55; }
 .noscript-note { position: fixed; bottom: 5rem; left: 1.5rem; right: 1.5rem; text-align: center; font-size: .85rem; color: var(--site-muted); }
 /* Keep the text clear of the index handle on narrow desktop windows. */
 @media (min-width: 701px) and (max-width: 1000px) and (pointer: fine) {
   .page-main, .page-main.wide, .article-main { width: min(100% - 8rem, 760px); }
 }
 @media (max-width: 850px) {
-  .top-nav { padding: 1.5rem; gap: 1rem; }
+  .top-nav, .home-header { padding: 1.5rem; gap: 1rem; }
 }
 @media (max-width: 700px), (pointer: coarse) {
   .page-footer { flex-wrap: wrap; }

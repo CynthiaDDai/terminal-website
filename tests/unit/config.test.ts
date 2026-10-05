@@ -94,11 +94,12 @@ describe('site profile', () => {
       pageFooter: ['One line.', '另一句。'], homeFooter: ['plain', { text: 'cats', motto: '衔蝉入梦' }],
       notFound: { title: 'Lost', description: 'Nothing here.', motto: '迷魂难招', quote: '雄鸡一声天下白。' },
       mottos: { index: '灯火阑珊', search: '众里寻他', toc: '栏杆拍遍' },
+      themeSwitch: { title: '天东有若木', labels: { storm: { text: 'dusk', motto: '瞑为夜' }, pine_ink: { text: 'dawn' } } },
     });
     expect(siteConfigErrors(profile)).toEqual([]);
-    Object.assign(profile, { pageFooter: [], homeFooter: [{ motto: 'no text' }], mottos: { footer: '多余' }, notFound: { title: 'Lost', description: '', quote: 1 } });
+    Object.assign(profile, { pageFooter: [], homeFooter: [{ motto: 'no text' }], mottos: { footer: '多余' }, themeSwitch: { labels: { 'Bad ID': { text: 'x' } } }, notFound: { title: 'Lost', description: '', quote: 1 } });
     const errors = siteConfigErrors(profile).join('\n');
-    for (const field of ['"pageFooter"', '"homeFooter"', '"mottos"', '"notFound"']) expect(errors).toContain(field);
+    for (const field of ['"pageFooter"', '"homeFooter"', '"mottos"', '"notFound"', '"themeSwitch"']) expect(errors).toContain(field);
   });
 });
 

@@ -1,5 +1,5 @@
 const text = ['name', 'owner', 'user', 'host', 'description', 'bio', 'caption', 'lang', 'dateLocale'];
-const known = new Set([...text, 'wordmark', 'homeFooter', 'pageFooter', 'notFound', 'mottos', 'feed', 'email', 'github', 'socials', 'friends', 'activityLimit']);
+const known = new Set([...text, 'wordmark', 'homeFooter', 'pageFooter', 'notFound', 'mottos', 'themeSwitch', 'feed', 'email', 'github', 'socials', 'friends', 'activityLimit']);
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
 const isString = (value: unknown): value is string => typeof value === 'string';
@@ -25,6 +25,11 @@ export function siteConfigErrors(profile: unknown): string[] {
   if (!Array.isArray(profile.homeFooter) || !profile.homeFooter.every(footerWord)) errors.push('"homeFooter" must be a list of strings or { "text": string, "motto": string }.');
   const pageFooter = profile.pageFooter;
   if (!isString(pageFooter) && !(Array.isArray(pageFooter) && pageFooter.length > 0 && pageFooter.every(isString))) errors.push('"pageFooter" must be a string or a list of strings.');
+  const themeSwitch = profile.themeSwitch;
+  if (themeSwitch !== undefined && !(isRecord(themeSwitch) && Object.keys(themeSwitch).every(key => ['title', 'labels'].includes(key)) && optionalString(themeSwitch.title)
+    && (themeSwitch.labels === undefined || (isRecord(themeSwitch.labels) && Object.entries(themeSwitch.labels).every(([id, label]) => /^[a-z0-9][a-z0-9_-]*$/.test(id) && isRecord(label) && isString(label.text) && optionalString(label.motto)))))) {
+    errors.push('"themeSwitch" may set a "title" string and "labels": theme ID → { "text": string, "motto": string }.');
+  }
   const mottos = profile.mottos;
   if (mottos !== undefined && !(isRecord(mottos) && Object.entries(mottos).every(([key, value]) => ['index', 'search', 'toc'].includes(key) && isString(value)))) {
     errors.push('"mottos" may only set "index", "search" and "toc" to strings.');

@@ -6,7 +6,7 @@ A personal website that looks and feels like a terminal, without pretending to b
 
 - Pages in Markdown or MDX, with math (KaTeX), highlighted code, footnotes, and download cards for PDFs
 - Commands with tab completion, path navigation (`..`, `~`, `cd -`) and full-text search, on every page
-- Themes taken directly from [Oh My Posh](https://ohmyposh.dev) prompt files: drop one in a folder and it styles the whole site
+- Themes taken directly from [Oh My Posh](https://ohmyposh.dev) prompt files: drop one from the [theme gallery](https://ohmyposh.dev/docs/themes) into a folder and it styles the whole site
 - A touch-first layout for phones
 - Static output: host it on GitHub Pages, any static host, or NixOS with Caddy
 

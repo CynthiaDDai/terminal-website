@@ -34,7 +34,7 @@
 .prose .footnotes { font-size: .9rem; color: var(--prose-muted); border-top: 1px solid var(--chrome-border); margin-top: 3rem; }
 /* Table of contents: a tree under the heading; beside the article, following the reader, where there is room. */
 .toc { font-family: var(--font-mono); font-size: .78rem; line-height: 1.6; color: var(--site-muted); margin-bottom: 2.8rem; }
-.toc-label { margin: 0 0 .6rem; color: var(--terminal-accent-1); letter-spacing: .04em; }
+.toc-label { margin: 0 0 .7rem; font-size: .88rem; color: var(--terminal-accent-1); letter-spacing: .04em; }
 .toc ol { list-style: none; margin: 0; padding: 0; }
 .toc a { display: flex; gap: .6ch; padding: .2rem 0; color: inherit; text-decoration: none; }
 .toc a:hover { color: var(--terminal-cyan); }

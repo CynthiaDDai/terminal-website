@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import shellSource from '../fixtures/themes/1_shell.omp.json';
-import installedShell from '../../src/themes/1_shell/1_shell.omp.json';
+import installedShell from '../fixtures/site/themes/1_shell/1_shell.omp.json';
 import teaSource from '../fixtures/themes/if_tea.omp.json';
-import installedTea from '../../src/themes/if_tea/if_tea.omp.json';
+import installedTea from '../fixtures/site/themes/if_tea/if_tea.omp.json';
 import { createThemeCatalog } from '../../src/lib/theme/catalog';
 import { themes, defaultTheme } from '../../src/lib/theme/registry';
 import { parseOhMyPoshTheme, resolveColor } from '../../src/lib/theme/omp-parser';
@@ -10,8 +10,8 @@ import { expandTemplate } from '../../src/lib/theme/template';
 import { adaptOhMyPoshTheme, themeTokens } from '../../src/lib/theme/omp-adapter';
 import { renderPrompt } from '../../src/lib/theme/prompt-renderer';
 import { mobilePrompt } from '../../src/lib/theme/mobile';
-import storm from '../../src/themes/storm/storm.omp.json';
-import stormDay from '../../src/themes/storm_day/storm_day.omp.json';
+import storm from '../fixtures/site/themes/storm/storm.omp.json';
+import stormDay from '../fixtures/site/themes/storm_day/storm_day.omp.json';
 
 const context = { user: 'mira', host: 'website', cwd: '~/blog/long-page', status: 'ok' as const,
   now: new Date(2026, 9, 3, 15, 4, 5),

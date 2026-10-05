@@ -2,7 +2,8 @@
   "default": "storm",
   "order": [
     "storm",
-    "pine_ink"
+    "storm_day",
+    "paper"
   ],
   "fallback": {
     "web": {},

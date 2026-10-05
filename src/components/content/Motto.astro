@@ -1,6 +1,0 @@
----
-// Decorative words beside an English label: small, hidden from assistive technology, never the only way to say something.
-interface Props { text?: string; class?: string; }
-const { text, class: className } = Astro.props;
----
-{text && <span class:list={['motto', className]} lang="zh" aria-hidden="true">{text}</span>}

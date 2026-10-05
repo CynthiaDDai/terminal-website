@@ -1,0 +1,52 @@
+{
+  "prompt": {
+    "palette": {
+      "bg": "#f2ece0",
+      "bg-dark": "#e9e2d3",
+      "surface": "#d5ccba",
+      "muted": "#6b6457",
+      "fg-soft": "#4a443b",
+      "fg": "#25221e",
+      "red": "#a2362a",
+      "orange": "#94551f",
+      "yellow": "#80601c",
+      "green": "#3d5f45",
+      "teal": "#356862",
+      "cyan": "#285c73",
+      "blue": "#33497a",
+      "purple": "#5b4874",
+      "magenta": "#8a3045"
+    },
+    "blocks": [
+      {
+        "type": "prompt",
+        "segments": [
+          {
+            "type": "path",
+            "style": "plain",
+            "foreground": "p:blue",
+            "template": "{{ .Path }}"
+          },
+          {
+            "type": "status",
+            "style": "plain",
+            "foreground": "p:red",
+            "template": "{{ if .Error }} !{{ end }}"
+          }
+        ]
+      },
+      {
+        "type": "prompt",
+        "newline": true,
+        "segments": [
+          {
+            "type": "text",
+            "style": "plain",
+            "foreground": "p:green",
+            "template": "❯ "
+          }
+        ]
+      }
+    ]
+  }
+}

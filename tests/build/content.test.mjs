@@ -60,7 +60,7 @@ test('production builds derive routes, navigation and search from content withou
     const env = { ...process.env };
     delete env.PUBLIC_SITE_URL;
     delete env.NODE_ENV;
-    for (const name of ['SITE_CONTENT_DIR', 'SITE_PROFILE', 'SITE_OUT_DIR']) delete env[name];
+    for (const name of Object.keys(env)) if (name.startsWith('SITE_')) delete env[name];
     const build = () => execFileSync(process.execPath, [join(root, 'node_modules/astro/bin/astro.mjs'), 'build', '--force'], { cwd: root, env, stdio: 'pipe' });
     const initialSources = sourceSnapshot();
     build();

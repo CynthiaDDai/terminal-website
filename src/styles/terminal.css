@@ -73,7 +73,7 @@ kbd { font-family: var(--font-mono); }
 .site-search { margin: max(2rem, 15svh) auto auto; width: min(700px, calc(100vw - 3rem)); max-height: 75svh; padding: 1.5rem 1.8rem; background: var(--site-bg); color: var(--site-fg); border: 1px solid var(--chrome-border); box-shadow: 0 24px 100px #0004; font-family: var(--font-mono); }
 .site-search::backdrop { background: #0008; }
 .search-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.1rem; }
-.search-heading h2 { font-size: .85rem; font-weight: 400; margin: 0; }
+.search-heading h2 { font-size: .95rem; font-weight: 400; margin: 0; }
 .search-heading .quiet-button { font-size: .7rem; }
 .search-input-line { display: flex; align-items: center; gap: .8rem; border-bottom: 1px solid var(--chrome-accent); padding: .4rem 0; }
 .search-input-line > span { color: var(--terminal-accent-1); }

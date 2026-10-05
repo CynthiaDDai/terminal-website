@@ -1,10 +1,10 @@
 ---
 import { site } from '../../config';
-import Motto from '../content/Motto.astro';
+import Paired from '../content/Paired.astro';
 ---
 <dialog id="site-search" class="site-search" aria-labelledby="search-title">
   <div class="search-heading">
-    <h2 id="search-title">Search this space<Motto text={site.mottos?.search} /></h2>
+    <h2 id="search-title"><Paired text="Search this space" motto={site.mottos?.search} /></h2>
     <button type="button" class="quiet-button" data-close-search aria-label="Close site search"><span class="desktop-search-copy">esc </span><span aria-hidden="true">×</span></button>
   </div>
   <form data-search-form role="search">

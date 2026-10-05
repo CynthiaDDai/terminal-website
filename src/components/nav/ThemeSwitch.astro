@@ -1,0 +1,14 @@
+---
+// The one theme switch for wide screens, in the top right corner of every page: the theme's colors and a label.
+// Each theme's label is rendered once and CSS shows the current theme's, so a saved theme never flashes another's.
+import { themes } from '../../lib/theme/registry';
+import { site } from '../../config';
+import Paired from '../content/Paired.astro';
+const labels = site.themeSwitch?.labels ?? {};
+const visible = themes.map(theme => `html[data-theme="${theme.id}"] .theme-switch [data-theme-label="${theme.id}"]{display:inline-flex}`).join('');
+---
+<style is:inline set:html={`.theme-switch [data-theme-label]{display:none}${visible}`}></style>
+<button class="theme-switch" type="button" data-cycle-theme aria-label="Switch color theme" title={site.themeSwitch?.title ?? 'Switch color theme'}>
+  <span class="theme-swatch" aria-hidden="true"></span>
+  {themes.map(theme => <span data-theme-label={theme.id}><Paired text={labels[theme.id]?.text ?? theme.name} motto={labels[theme.id]?.motto} /></span>)}
+</button>

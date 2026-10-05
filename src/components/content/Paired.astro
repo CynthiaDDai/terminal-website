@@ -1,0 +1,7 @@
+---
+// An English label and its motto, set as one unit: the motto sits right under the label, sized from it.
+// The motto is decorative: hidden from assistive technology, so the label alone names the thing.
+interface Props { text: string; motto?: string; class?: string; }
+const { text, motto, class: className } = Astro.props;
+---
+{motto ? <span class:list={['paired', className]}><span class="paired-text">{text}</span><span class="paired-motto" lang="zh" aria-hidden="true">{motto}</span></span> : text}

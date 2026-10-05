@@ -4,9 +4,9 @@ This project includes or adapts the following work. Each keeps its own license.
 
 | Files | Source | License |
 | --- | --- | --- |
-| `src/themes/1_shell/1_shell.omp.json`, `src/themes/if_tea/if_tea.omp.json` (and the reference copies used by the unit tests) | Unchanged copies of the [Oh My Posh](https://github.com/JanDeDobbeleer/oh-my-posh) themes `1_shell` and `if_tea` | MIT, below |
+| `tests/fixtures/site/themes/1_shell/`, `tests/fixtures/site/themes/if_tea/` and `tests/fixtures/themes/` (test fixtures only) | Unchanged copies of the [Oh My Posh](https://github.com/JanDeDobbeleer/oh-my-posh) themes `1_shell` and `if_tea` | MIT, below |
 | `src/themes/storm/` | Original prompt layout using the colors of the [Tokyo Night](https://github.com/enkia/tokyo-night-vscode-theme) Storm palette | MIT, below |
-| `src/themes/storm_day/`, `src/themes/paper/` | Light variants of `storm` with their own palettes | This project's MIT license |
+| `src/themes/pine_ink/` (and the earlier `storm_day` and `paper` in the test fixtures) | Light variants of `storm` with their own palettes | This project's MIT license |
 | `public/fonts/` | Each font's source is listed in `public/fonts/README.txt` | The license file beside each font |
 
 npm dependencies (Astro, KaTeX, Shiki and others) are installed from the registry and carry their own licenses in `node_modules/`.

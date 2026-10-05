@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import source from '../fixtures/themes/tokyo_slim_storm_v1_4.omp.json';
-import stormSource from '../../src/themes/storm/storm.omp.json';
+import stormSource from '../fixtures/site/themes/storm/storm.omp.json';
 import { normalizePath, resolvePath, listChildren, breadcrumbs, pathFromUrl, type SiteEntry } from '../../src/lib/navigation/filesystem';
 import { buildContentTree, type ContentSource } from '../../src/lib/content/tree';
 import { tokenize } from '../../src/lib/terminal/parser';

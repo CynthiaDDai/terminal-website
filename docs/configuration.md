@@ -71,7 +71,7 @@ The keyboard hints on the 404 page are part of the template, not `site.json`.
 
 ### Mottos
 
-A motto is a few decorative words beside an English label, such as a line of Chinese. Mottos are small and quiet, set in `--font-cjk`, and hidden from screen readers and search: each one sits beside the label it decorates and never replaces it. Leave them out and nothing changes.
+A motto is a few decorative words paired with an English label, such as four Chinese characters. The motto sits tightly under its label, set in `--font-cjk` and sized in proportion to it, so the two read as one unit. Mottos are hidden from screen readers and from the site's search, and never replace the label. Leave them out and nothing changes. The pairing lives in `src/components/content/Paired.astro`, and its spacing and sizes in the `.paired` rules of `src/styles/chrome.css`.
 
 ```json
 "mottos": { "index": "灯火阑珊", "search": "众里寻他", "toc": "栏杆拍遍" },
@@ -81,12 +81,28 @@ A motto is a few decorative words beside an English label, such as a line of Chi
 
 | Where | Set with |
 | --- | --- |
-| The index handle at the right edge, written vertically | `mottos.index` |
+| The index handle at the right edge: two vertical columns | `mottos.index` |
 | The search dialog's heading | `mottos.search` |
 | The table of contents label | `mottos.toc` |
 | A word in the home footer | `homeFooter` |
-| Above a page's title | `motto` in the page's frontmatter, or in a folder's `index.md` (see [Writing](writing.md#frontmatter)) |
-| Above the 404 title | `notFound.motto` |
+| Under a page's title | `motto` in the page's frontmatter, or in a folder's `index.md` (see [Writing](writing.md#frontmatter)) |
+| Under the 404 title | `notFound.motto` |
+
+### Theme switch
+
+The switch in the top right corner shows the current theme's name. `themeSwitch` can give each theme (by its folder ID) a label of its own, with an optional motto, and replace the tooltip:
+
+```json
+"themeSwitch": {
+  "title": "天东有若木，下置衔烛龙。—— 李贺《苦昼短》",
+  "labels": {
+    "storm": { "text": "dusk", "motto": "瞑为夜" },
+    "pine_ink": { "text": "dawn", "motto": "视为昼" }
+  }
+}
+```
+
+Themes without a label keep their name. Screen readers always hear "Switch color theme".
 
 ### Content
 
@@ -120,7 +136,7 @@ Empty fields are simply left out of the site; nothing shows "no email".
 ```json
 {
   "default": "storm",
-  "order": ["storm", "storm_day", "paper"],
+  "order": ["storm", "pine_ink"],
   "fallback": {
     "web": {},
     "mobile": "compact",

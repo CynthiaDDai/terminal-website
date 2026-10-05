@@ -372,14 +372,19 @@ document.querySelectorAll<HTMLButtonElement>('[data-toggle-edge]').forEach(butto
   let pinned = false;
   try { if (!localStorage.getItem(seenKey)) edge.classList.add('nudge'); } catch {}
   const sync = () => {
-    const expanded = pinned || menu.matches(':hover, :focus-within');
+    const expanded = pinned || menu.classList.contains('is-open') || menu.matches(':focus-within');
     button.setAttribute('aria-expanded', String(expanded));
     if (!expanded || !edge.classList.contains('nudge')) return;
     edge.classList.remove('nudge');
     try { localStorage.setItem(seenKey, '1'); } catch {}
   };
   button.addEventListener('click', () => { pinned = !pinned; menu.classList.toggle('is-expanded', pinned); sync(); });
-  for (const event of ['mouseenter', 'mouseleave', 'focusin']) menu.addEventListener(event, sync);
+  // Hover opens at once and closes after a short grace period, so a pointer that slips off for a moment
+  // (a shaky hand, or browser UI sliding over the window edge) does not make the menu flicker.
+  let closing = 0;
+  menu.addEventListener('mouseenter', () => { clearTimeout(closing); menu.classList.add('is-open'); sync(); });
+  menu.addEventListener('mouseleave', () => { closing = window.setTimeout(() => { menu.classList.remove('is-open'); sync(); }, 250); });
+  menu.addEventListener('focusin', sync);
   menu.addEventListener('focusout', () => queueMicrotask(sync));
 });
 

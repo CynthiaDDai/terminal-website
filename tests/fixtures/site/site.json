@@ -31,6 +31,18 @@
     "search": "寻寻觅觅",
     "toc": "按图索骥"
   },
+  "themeSwitch": {
+    "title": "Night and day",
+    "labels": {
+      "storm": {
+        "text": "dusk",
+        "motto": "瞑为夜"
+      },
+      "storm_day": {
+        "text": "dawn"
+      }
+    }
+  },
   "lang": "en",
   "dateLocale": "en-CA",
   "feed": [
