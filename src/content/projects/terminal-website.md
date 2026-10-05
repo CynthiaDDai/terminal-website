@@ -25,7 +25,7 @@ ls
 cd ~/blog
 open the-shape-of-attention
 cd ..
-theme paper
+theme pine_ink
 ```
 
 ## Static where it matters

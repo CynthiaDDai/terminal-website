@@ -15,7 +15,11 @@
     "building",
     "thinking"
   ],
-  "pageFooter": "Take your time.",
+  "pageFooter": [
+    "Take your time.",
+    "Read slowly.",
+    "Come back soon."
+  ],
   "notFound": {
     "title": "A path less travelled.",
     "description": "There isn’t a page at this address."
