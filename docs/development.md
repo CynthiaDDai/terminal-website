@@ -22,7 +22,7 @@ src/
 ├── themes/           one folder per theme
 ├── pages/            Astro routes: index, [...path], 404, rss.xml, sitemap.xml
 ├── layouts/          BaseLayout (head, data, theme bootstrap), PageLayout, ArticleLayout
-├── components/       nav/ (top bar, edge index, mobile index), shell/ (prompt, command bar, search, panels), content/ (listings)
+├── components/       nav/ (top bar, theme switch, edge index, mobile index, footer), shell/ (prompt, command bar, search, panels), content/ (listings, label and motto pairs)
 ├── lib/
 │   ├── content/      tree.ts: the content tree
 │   ├── navigation/   filesystem.ts (paths), site-index.ts (loads the tree, checks names and site.json)
@@ -31,8 +31,8 @@ src/
 │   ├── search/       text extraction and ranking
 │   └── site-config.ts site.json validation
 ├── scripts/site.ts   the only client script: commands, search, themes, panels
-└── styles/           tokens, chrome, terminal, prose, mobile
-scripts/              build-time helpers: theme discovery, rehype plugins, URL and link checks
+└── styles/           fonts, tokens, chrome, terminal, prose, mobile
+scripts/              build-time helpers: theme discovery, rehype plugins, font subsetting, URL and link checks
 tests/                unit/, browser/, dev/, build/, server/, fixtures/site/
 nix/module.nix        NixOS service
 default.nix           Nix package
@@ -73,7 +73,7 @@ Add an entry to `commands` in `src/lib/terminal/registry.ts`:
 
 Tests never build your own content. `tests/fixtures/site/` is a separate sample site with its own `content/` and `site.json`, including `placeholder-*` pages that exercise every feature: grouped listings, file cards, drafts, ignored names, nested sections, MDX, images.
 
-The suites switch to it with three environment variables, which you can also use yourself:
+The suites switch to it with these environment variables, which you can also use yourself:
 
 | Variable | Default | Fixture |
 | --- | --- | --- |
@@ -117,6 +117,6 @@ nix-shell shell.nix --run 'npm run test:browser'
 
 - The site must be served from a domain root. Supporting a sub-path would need one place that prefixes every internal URL.
 - The full-text search index is embedded in every page and grows with the amount of content. Moving it to a separately loaded file is the fix once that matters.
-- The bundled Nerd Font (1.2 MB) is complete, so any icon in a new theme works. Renaming it to `*.subset.woff2` would cut it to the icons the installed themes use, since theme data is part of the built scripts.
+- The bundled Nerd Font (1.2 MB) is complete, so any icon in a new theme works. Renaming it to `*.subset.woff2` (and its `url()` in `fonts.css`) would cut it to the icons the installed themes use, since theme data is part of the built scripts.
 - Search text for MDX pages is taken from the source, so JSX expressions are indexed as words.
 - Astro prints an `use astro:head-inject` bundling warning for MDX. Static output is unaffected.

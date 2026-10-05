@@ -14,7 +14,7 @@ const common = z.looseObject({
   // Status value → heading; children are listed under these headings in this order.
   groups: z.record(z.string(), z.string()).optional(),
   example: z.boolean().default(false),
-  // Decorative words shown small above the title.
+  // Decorative words set under the title, flush right.
   motto: z.string().optional(),
   status: z.string().optional(),
   authors: z.string().optional(),

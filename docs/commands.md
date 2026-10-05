@@ -49,6 +49,8 @@ On the **home page**, the terminal keeps every result until `clear` or until the
 
 On **content pages**, a command bar sits above the content. Its linked path is the page's breadcrumb. Each command replaces the previous result, `Escape` dismisses it, and there is no history.
 
+The **theme switch** in the top right corner shows the current theme; clicking it moves to the next theme in `order` (see [Configuration](configuration.md#theme-switch)).
+
 The **index** on the right edge of the screen lists the whole site. It opens on hover, keyboard focus or click, and marks the current section. Until a visitor first opens it, its handle twitches briefly a few seconds after each page load (never when the system asks for reduced motion).
 
 ## Phones and tablets

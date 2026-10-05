@@ -91,10 +91,10 @@ describe('site profile', () => {
   it('accepts footer lines, footer words with mottos and the three motto slots, and nothing else', () => {
     const profile = valid();
     Object.assign(profile, {
-      pageFooter: ['One line.', '另一句。'], homeFooter: ['plain', { text: 'cats', motto: '衔蝉入梦' }],
-      notFound: { title: 'Lost', description: 'Nothing here.', motto: '迷魂难招', quote: '雄鸡一声天下白。' },
-      mottos: { index: '灯火阑珊', search: '众里寻他', toc: '栏杆拍遍' },
-      themeSwitch: { title: '天东有若木', labels: { storm: { text: 'dusk', motto: '瞑为夜' }, pine_ink: { text: 'dawn' } } },
+      pageFooter: ['One line.', '另一句。'], homeFooter: ['plain', { text: 'writing', motto: '笔耕不辍' }],
+      notFound: { title: 'Lost', description: 'Nothing here.', motto: '此路不通', quote: '另寻他路。' },
+      mottos: { index: '一览无余', search: '上下求索', toc: '纲举目张' },
+      themeSwitch: { title: 'Day or night', labels: { storm: { text: 'night', motto: '夜' }, pine_ink: { text: 'day' } } },
     });
     expect(siteConfigErrors(profile)).toEqual([]);
     Object.assign(profile, { pageFooter: [], homeFooter: [{ motto: 'no text' }], mottos: { footer: '多余' }, themeSwitch: { labels: { 'Bad ID': { text: 'x' } } }, notFound: { title: 'Lost', description: '', quote: 1 } });

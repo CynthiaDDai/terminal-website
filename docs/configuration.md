@@ -4,7 +4,7 @@ All settings are plain files in the repository. There is no dashboard or hosted 
 
 | File | Controls |
 | --- | --- |
-| `src/config/site.json` | Your profile and every piece of personal wording in the templates |
+| `src/config/site.json` | Your profile and the site's own wording (interface labels such as "Search this space" are in the components) |
 | `src/config/themes.json` | Default theme, theme order, fallbacks for incomplete themes |
 | `config.jsonc` | Appearance of the `fastfetch` command |
 | `src/styles/fonts.css` | Fonts |
@@ -61,7 +61,7 @@ All settings are plain files in the repository. There is no dashboard or hosted 
 | --- | --- |
 | `wordmark` | The site's name in the header. `name` is shown plainly and `suffix` in a quieter style, so `{ "name": "ada", "suffix": "’s notebook" }` reads **ada**’s notebook. On the home page it links to `/about` if that page exists |
 | `caption` | A short line beside the wordmark on the home page |
-| `homeFooter` | Words in the home page footer, separated by `·`. Each word may instead be `{ "text": "cats", "motto": "衔蝉入梦" }` (see [Mottos](#mottos)) |
+| `homeFooter` | Words in the home page footer, separated by `·`. Each word may instead be `{ "text": "writing", "motto": "笔耕不辍" }` (see [Mottos](#mottos)) |
 | `pageFooter` | The line in the middle of the footer on every page except home. A list of lines works too: each page shows one of them, always the same one for the same page |
 | `notFound` | Title and description of the 404 page, and optionally its `motto` and its own footer `quote` |
 | `lang` | The page language, e.g. `en`, `zh-CN`. Screen readers and hyphenation use it |
@@ -71,12 +71,12 @@ The keyboard hints on the 404 page are part of the template, not `site.json`.
 
 ### Mottos
 
-A motto is a few decorative words paired with an English label, such as four Chinese characters. The motto sits tightly under its label, set in `--font-cjk` and sized in proportion to it, so the two read as one unit. Mottos are hidden from screen readers and from the site's search, and never replace the label. Leave them out and nothing changes. The pairing lives in `src/components/content/Paired.astro`, and its spacing and sizes in the `.paired` rules of `src/styles/chrome.css`.
+A motto is a few decorative Chinese words paired with an English label, such as a four-character idiom. The motto sits tightly under its label, set in `--font-cjk` and sized in proportion to it, so the two read as one unit. Mottos are marked as Chinese (`lang="zh"`); for another language, change that attribute in `Paired.astro`. Mottos are hidden from screen readers and from the site's search, and never replace the label. Leave them out and nothing changes. The pairing lives in `src/components/content/Paired.astro`, and its spacing and sizes in the `.paired` rules of `src/styles/chrome.css`.
 
 ```json
-"mottos": { "index": "灯火阑珊", "search": "众里寻他", "toc": "栏杆拍遍" },
-"homeFooter": ["writing", { "text": "cats", "motto": "衔蝉入梦" }],
-"notFound": { "title": "A path less travelled.", "description": "There isn’t a page at this address.", "motto": "迷魂难招" }
+"mottos": { "index": "一览无余", "search": "上下求索", "toc": "纲举目张" },
+"homeFooter": [{ "text": "writing", "motto": "笔耕不辍" }, "building"],
+"notFound": { "title": "A path less travelled.", "description": "There isn’t a page at this address.", "motto": "此路不通" }
 ```
 
 | Where | Set with |
@@ -94,10 +94,10 @@ The switch in the top right corner shows the current theme's name. `themeSwitch`
 
 ```json
 "themeSwitch": {
-  "title": "天东有若木，下置衔烛龙。—— 李贺《苦昼短》",
+  "title": "Day or night",
   "labels": {
-    "storm": { "text": "dusk", "motto": "瞑为夜" },
-    "pine_ink": { "text": "dawn", "motto": "视为昼" }
+    "storm": { "text": "night", "motto": "夜" },
+    "pine_ink": { "text": "day", "motto": "昼" }
   }
 }
 ```
@@ -223,7 +223,7 @@ The other names are fonts already installed on visitors' systems; `--font-cjk` l
 2. Add an `@font-face` for each file to `fonts.css`. Copy one of the existing rules and change the name, file and `font-weight`/`font-style`.
 3. Put the name at the start of a variable.
 
-For example, to set Chinese text in [Huiwen Mincho](https://github.com/bosswnx/huiwenmincho-improved), saved as `public/fonts/huiwen-mincho.subset.woff2`:
+For example, to set Chinese text in [Huiwen Mincho](https://github.com/bosswnx/huiwenmincho-improved) (CC0), saved as `public/fonts/huiwen-mincho.subset.woff2`:
 
 ```css
 @font-face {
@@ -233,7 +233,7 @@ For example, to set Chinese text in [Huiwen Mincho](https://github.com/bosswnx/h
   size-adjust: 110%;
   unicode-range: U+2E80-2FDF, U+3000-33FF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+20000-2FA1F;
 }
-:root { --font-cjk: 'Huiwen Mincho'; }
+:root { --font-cjk: 'Huiwen Mincho', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC'; }
 ```
 
 - A file name ending in `.subset.woff2` tells the build to cut the font down to the characters the built site actually contains. A complete CJK font is several megabytes; cut down to a site's few hundred characters, it is tens of kilobytes. The development server serves the complete file. Characters that visitors type, such as a search in Chinese, may be missing from the cut-down font and fall back to a system font.
@@ -255,6 +255,6 @@ The build needs the site's public origin for canonical links, the sitemap, RSS a
 PUBLIC_SITE_URL=https://ada.example.org
 ```
 
-The value must be an origin: `https://` plus a host, with no path, query or fragment. Anything else stops the build. `.env` files are ignored by Git; `.env.example` shows the format.
+The value must be an origin: `https://` (or `http://`) plus a host, with no path, query or fragment. Anything else stops the build. `.env` files are ignored by Git; `.env.example` shows the format.
 
 `npm run check:release` prints the address a production build would use, and fails on placeholder or local addresses (`example.com`, `*.example`, `localhost`, `127.0.0.1`). Run it before building a release by hand.

@@ -6,7 +6,7 @@ You need Node.js 22.12 or newer and Git. Nix is optional; see [Development](deve
 
 ## Get your own copy
 
-On GitHub, open [the template](https://github.com/CynthiaDDai/terminal-website) and click **Fork**. In your fork, open **Settings → General** and rename it to `<your-user>.github.io`, the name GitHub Pages uses for a personal site. Then clone it:
+On GitHub, open [the template](https://github.com/CynthiaDDai/terminal-website) and click **Fork**. In your fork, open **Settings → General** and rename it to `<your-user>.github.io`, the name GitHub Pages uses for a personal site. GitHub turns off workflows in new forks: open the **Actions** tab and enable them, or nothing will build. Then clone it:
 
 ```sh
 git clone https://github.com/<your-user>/<your-user>.github.io.git
@@ -28,7 +28,7 @@ Leave `npm run dev` running while you work. Content changes appear when you refr
 
 ## 2. Put your name on it
 
-Open `src/config/site.json`. Every piece of personal wording in the page templates lives here. At minimum, change:
+Open `src/config/site.json`. Your name and the site's own wording live here; interface labels such as "Search this space" are part of the components. At minimum, change:
 
 ```json
 {
@@ -62,9 +62,9 @@ This is my first page. It supports **Markdown**, footnotes and math such as $e^{
 
 **Check:** visit `http://127.0.0.1:4321/hello`. On the home page, `ls` lists `hello` and `cd hello` opens it.
 
-Now make a section. Create the folder `src/content/blog/` and put `first-post.md` inside it.
+Now make a section. Create the folder `src/content/journal/` and put `first-post.md` inside it.
 
-**Check:** `/blog` exists and lists the post, although you never wrote a page for it. `/blog/first-post` opens the post.
+**Check:** `/journal` exists and lists the post, although you never wrote a page for it. `/journal/first-post` opens the post.
 
 File and folder names must be lowercase ASCII words joined by hyphens, such as `first-post.md`. The title shown to readers can be anything, in any language; put it in `title`. [Writing content](writing.md) explains folders, frontmatter, file cards and everything else about pages.
 
@@ -72,7 +72,7 @@ File and folder names must be lowercase ASCII words joined by hyphens, such as `
 
 Delete the sample pages you don't need from `src/content/` and rewrite `about.md`, `uses.md` and `contact.mdx`. Pages marked `example: true` show an "Example content" label and are left out of the RSS feed and `fastfetch`; remove the flag once a page is yours.
 
-Files in `public/` are served as they are: `public/cv.pdf` is at `/cv.pdf`.
+Files in `public/` are served as they are: a file you save as `public/cv.pdf` is at `/cv.pdf`.
 
 **Check:**
 
@@ -116,9 +116,9 @@ It prints the address, or refuses placeholder and local addresses such as `https
 
 The simplest route is GitHub Pages:
 
-1. Make sure the repository is named `<your-user>.github.io` (see [Get your own copy](#get-your-own-copy)).
+1. Make sure the repository is named `<your-user>.github.io` and its workflows are enabled (see [Get your own copy](#get-your-own-copy)).
 2. In the repository, open Settings → Pages and set Source to **GitHub Actions**.
-3. Push to `main`. The included workflow builds and publishes the site.
+3. Push to `main`. The included workflow builds and publishes the site. If you pushed before step 2, open the Actions tab, choose "Deploy to GitHub Pages" and click **Run workflow**.
 
 **Check:** the Actions tab shows a green "Deploy to GitHub Pages" run, and `https://<your-user>.github.io` shows your site.
 

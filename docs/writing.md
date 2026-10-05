@@ -32,7 +32,7 @@ Folder and file names (without the extension) are lowercase ASCII letters and di
 | Allowed | Not allowed |
 | --- | --- |
 | `first-post.md` | `First Post.md`, `first_post.md`, `first--post.md` |
-| `math-146-winter-2023.md` | `math.146.md`, `c#-tips.md`, `why?.md` |
+| `notes-2026-spring.md` | `notes.2026.md`, `c#-tips.md`, `why?.md` |
 | `machine-learning/` | `机器学习/`, `Machine Learning/` |
 
 A name that breaks these rules stops the build with a list of every file to rename. The name is only the URL; the title readers see comes from the `title` frontmatter field and can use any words, capitals or script.
@@ -143,9 +143,9 @@ groups:
 ```
 
 ```yaml
-# research/heights-on-stacks.md
+# research/tide-pool-survey.md
 ---
-title: Heights on stacks
+title: A survey of tide pools
 status: Preprint
 ---
 ```
@@ -160,13 +160,13 @@ List groups from finished to in progress. Themes can mark work outside the first
 
 ```yaml
 ---
-title: Heights on stacks
+title: A survey of tide pools
 status: Preprint
 authors: A. Author, B. Coauthor
 venue: arXiv 2503.01234
 links:
   arXiv: https://arxiv.org/abs/2503.01234
-  PDF: /research/heights.pdf
+  PDF: /research/tide-pools.pdf
 ---
 Optional abstract, notes or errata.
 ```
@@ -208,8 +208,8 @@ PDFs and other downloads are shown as cards instead of being embedded, because b
 A link that stands alone on the first line of a paragraph, and points at a file in `public/`, becomes a card. The link text is the card's title, and any following lines in the same paragraph are its description:
 
 ```md
-[Why Linear Algebra](/assets/slides/whylinalg.pdf)
-Motivating linear maps with a formula for the Fibonacci numbers.
+[A short talk](/assets/slides/short-talk.pdf)
+Slides from a ten-minute talk, with a formula for the Fibonacci numbers.
 ```
 
 The card shows the file type, size, a description (Markdown and math work in it) and a `pull` button that downloads the file.
@@ -217,7 +217,7 @@ The card shows the file type, size, a description (Markdown and math work in it)
 To mark a file as unfinished, give the link the title `"wip"`:
 
 ```md
-[Category Theory](/notes/category.pdf "wip")
+[Lecture notes](/notes/lecture-notes.pdf "wip")
 ```
 
 Any other link title on a card stops the build. A link inside a sentence stays an ordinary link.
