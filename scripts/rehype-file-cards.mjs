@@ -19,7 +19,7 @@ function publicFile(href) {
 }
 
 const textOf = node => node.type === 'text' ? node.value : (node.children ?? []).map(textOf).join('');
-// A card is named after its title: [Algebraic Stacks] is …/algebraic-stacks.
+// A card is named after its title: [Lecture Notes] is …/lecture-notes.
 export const slug = value => value.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 function card(link, size, description) {
